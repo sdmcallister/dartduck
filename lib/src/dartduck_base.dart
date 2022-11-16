@@ -4,6 +4,12 @@ import 'duckdb_bindings.dart';
 import 'dart:ffi';
 import 'package:ffi/ffi.dart' as ffi;
 
+class DbException implements Exception {
+  String message = 'unknown database error';
+
+  DbException(this.message);
+}
+
 class Database {
   final Pointer<duckdb_database> _dbptr = ffi.malloc();
   final _duckdb = DuckDB(DynamicLibrary.open(getLibraryPath()));
@@ -12,7 +18,7 @@ class Database {
     var name = dbname.toNativeUtf8().cast<Char>();
     if (_duckdb.duckdb_open(name, _dbptr) == duckdb_state.DuckDBError) {
       ffi.malloc.free(name);
-      throw FormatException('Could not open database');
+      throw DbException("could not open database");
     }
     ffi.malloc.free(name);
   }
