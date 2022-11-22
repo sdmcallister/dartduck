@@ -19,7 +19,7 @@ dev_dependencies:
 ffigen:
   name: DuckDB
   description: Bindings to `headers/duckdb.h`.
-  output: 'duckdb_bindings.dart'
+  output: './lib/src/duckdb_bindings.dart'
   comments: false
   headers:
     entry-points:
